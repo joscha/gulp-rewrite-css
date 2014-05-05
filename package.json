@@ -20,7 +20,9 @@
   },
   "scripts": {
     "postinstall": "coffee -o lib/ src/",
-    "test": "mocha --compilers coffee:coffee-script/register -R spec"
+    "test": "mocha --compilers coffee:coffee-script/register -R spec",
+    "coverage": "coffee -o src/ src/ && coffee -o test/ test/ && istanbul cover node_modules/.bin/_mocha --report html -- -R spec -t 3000 -s 2000",
+    "coveralls": "coffee -o src/ src/ && coffee -o test/ test/ && istanbul cover _mocha --report lcovonly -- -R spec -t 3000 -s 2000 && cat ./coverage/lcov.info | coveralls"
   },
   "devDependencies": {
     "mocha": "~1.18.2",
@@ -29,7 +31,10 @@
     "should": "~3.3.1",
     "sinon": "~1.9.1",
     "proxyquire": "~0.6.0",
-    "strip-ansi": "~0.2.1"
+    "strip-ansi": "~0.2.1",
+    "istanbul": "~0.2.8",
+    "mocha-lcov-reporter": "0.0.1",
+    "coveralls": "~2.10.0"
   },
   "licenses": [
     {
