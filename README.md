@@ -39,7 +39,7 @@ gulp.task('my-rewrite', function() {
 ```
 ### Options
 * `destination` (required) - the target directory for the processed CSS. Paths are rewritten relatively to that directory.
-* `[debug]` (optional) defaults to false - whether to log what gulp-rewrite-css is doing
+* `[debug]` (optional, defaults to false) - whether to log what gulp-rewrite-css is doing
 
 ## License
 
@@ -53,6 +53,7 @@ MIT (c) 2014 Joscha Feth <joscha@feth.com>
 
 [coveralls-url]: https://coveralls.io/r/joscha/gulp-rewrite-css
 [coveralls-image]: http://img.shields.io/coveralls/joscha/gulp-rewrite-css.svg
+[coveralls-original-image]: https://coveralls.io/repos/joscha/gulp-rewrite-css/badge.png
 
 [depstat-url]: https://david-dm.org/joscha/gulp-rewrite-css
 [depstat-image]: https://david-dm.org/joscha/gulp-rewrite-css.svg?theme=shields.io
