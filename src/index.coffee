@@ -1,7 +1,10 @@
+'use strict'
+
 es = require 'event-stream'
 BufferStreams = require 'bufferstreams'
 gutil = require 'gulp-util'
 path = require 'path'
+url = require 'url'
 
 PLUGIN_NAME = 'rewrite-css'
 
@@ -20,6 +23,10 @@ cleanMatch = (url) ->
     url = url.substr 1, url.length - 2
   url
 
+isRelativeUrl = (u) ->
+  parts = url.parse u, false, true
+  not parts.protocol and not parts.host
+
 module.exports = (opt) ->
   opt ?= {}
   opt.debug ?= false
@@ -30,11 +37,14 @@ module.exports = (opt) ->
     sourceDir = path.dirname sourceFilePath
     destinationDir = opt.destination
     data.replace URL_REGEX, (match, file) =>
+      ret = match
       file = cleanMatch file
-      allegedTarget = path.join sourceDir, file
-      targetUrl = path.join (path.relative destinationDir, sourceDir), file
-      ret = """url("#{targetUrl.replace('"', '\\"')}")"""
-      gutil.log (gutil.colors.magenta PLUGIN_NAME), 'rewriting path for', (gutil.colors.magenta match), 'in', (gutil.colors.magenta sourceFilePath), 'to', (gutil.colors.magenta ret) if opt.debug
+      if isRelativeUrl file
+        targetUrl = path.join (path.relative destinationDir, sourceDir), file
+        ret = """url("#{targetUrl.replace('"', '\\"')}")"""
+        gutil.log (gutil.colors.magenta PLUGIN_NAME), 'rewriting path for', (gutil.colors.magenta match), 'in', (gutil.colors.magenta sourceFilePath), 'to', (gutil.colors.magenta ret) if opt.debug
+      else
+        gutil.log (gutil.colors.magenta PLUGIN_NAME), 'not rewriting absolute path for', (gutil.colors.magenta match), 'in', (gutil.colors.magenta sourceFilePath) if opt.debug
       ret
 
   bufferReplace = (file, data) ->

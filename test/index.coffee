@@ -15,6 +15,13 @@ fs = require 'fs'
 gutil = require 'gulp-util'
 stripAnsi = require 'strip-ansi'
 
+getFixturePath = (relativePath = '') ->
+  path.join __dirname, 'fixtures', relativePath
+
+loadFixture = (relativePath) ->
+  p = getFixturePath relativePath
+  fs.readFileSync p, 'utf8'
+
 describe 'gulp-rewrite-css', ->
   opts = null
   expected = null
@@ -23,11 +30,10 @@ describe 'gulp-rewrite-css', ->
   beforeEach ->
     sinon.spy gutilStub, 'log'
     opts =
-      destination: path.join __dirname, './fixtures/another/dir'
+      destination: getFixturePath 'another/dir'
 
-    inFile = path.join __dirname, './fixtures/index.css'
-    expectedFile = path.join __dirname, './fixtures/index.expected.css'
-    expected = fs.readFileSync expectedFile, 'utf8'
+    inFile = getFixturePath 'index.css'
+    expected = loadFixture 'index.expected.css'
 
   afterEach ->
     gutilStub.log.restore()
@@ -50,7 +56,7 @@ describe 'gulp-rewrite-css', ->
   describe 'with null file', ->
     it 'should return the file as-is', (done) ->
       file = new gutil.File
-        base: path.join __dirname, './fixtures/'
+        base: getFixturePath()
         cwd: __dirname,
         path: inFile
         contents: null
@@ -59,7 +65,6 @@ describe 'gulp-rewrite-css', ->
       stream.on 'data', (processed) ->
         file.should.be.exactly processed
         done()
-
       stream.write file
 
   describe 'with buffers', ->
@@ -77,16 +82,43 @@ describe 'gulp-rewrite-css', ->
         expected.should.eql file.contents.toString()
         done()
 
+    describe 'absolute URLs', ->
+
+      beforeEach ->
+        inFile = getFixturePath 'absolute.css'
+        expected = loadFixture 'absolute.css'
+
+      it 'should not rewrite absolute URLs', (done) ->
+        gulp.src(inFile)
+        .pipe(rewriteCss(opts))
+        .pipe es.map (file) ->
+          expected.should.eql file.contents.toString()
+          done()
+
+      it 'shoud log that it did not rewrite absolute URLs', (done) ->
+        opts.debug = true
+        gulp.src(inFile)
+        .pipe(rewriteCss(opts))
+        .pipe es.map (file) ->
+          gutilStub.log.calledOnce.should.be.true
+          expectedLog = """rewrite-css not rewriting absolute path for url(http://www.fonts.com/OpenSans.woff) in #{inFile}"""
+          stripAnsi(gutilStub.log.firstCall.args.join(' ')).should.eql expectedLog
+          done()
+
   describe 'with streams', ->
     it 'should return file.contents as a stream', (done) ->
-      gulp.src(inFile, {buffer: false})
+      gulp.src(inFile, {
+        buffer: false
+      })
       .pipe(rewriteCss(opts))
       .pipe es.map (file) ->
         file.contents.should.be.an.instanceof Stream
         done()
 
     it 'should rewrite URLs', (done) ->
-      gulp.src(inFile, {buffer: false})
+      gulp.src(inFile, {
+        buffer: false
+      })
       .pipe(rewriteCss(opts))
       .pipe es.map (file) ->
         file.contents.pipe es.wait (err, data) ->
@@ -96,10 +128,9 @@ describe 'gulp-rewrite-css', ->
   describe 'edge cases', ->
 
     assert = (file, done, expectedOverride = null) ->
-      inFile = path.join __dirname, file
+      inFile = getFixturePath file
       if expectedOverride
-        expectedFile = path.join __dirname, expectedOverride
-        expected = fs.readFileSync expectedFile, 'utf8'
+        expected = loadFixture expectedOverride
 
       gulp.src(inFile)
       .pipe(rewriteCss(opts))
@@ -108,10 +139,10 @@ describe 'gulp-rewrite-css', ->
         done()
 
     it 'should handle single quoted URLs', (done) ->
-      assert './fixtures/index.quotes.single.css', done
+      assert 'index.quotes.single.css', done
     it 'should handle double quoted URLs', (done) ->
-      assert './fixtures/index.quotes.double.css', done
+      assert 'index.quotes.double.css', done
     it 'should handle URLs with whitespaces', (done) ->
-      assert './fixtures/index.whitespaces.css', done
+      assert 'index.whitespaces.css', done
     it 'should handle URLs with a double quote', (done) ->
-      assert './fixtures/index.url.with.quotes.css', done, './fixtures/index.url.with.quotes.expected.css'
+      assert 'index.url.with.quotes.css', done, 'index.url.with.quotes.expected.css'
