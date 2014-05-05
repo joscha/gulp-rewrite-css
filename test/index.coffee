@@ -12,6 +12,7 @@ es = require 'event-stream'
 Stream = require 'stream'
 path = require 'path'
 fs = require 'fs'
+gutil = require 'gulp-util'
 stripAnsi = require 'strip-ansi'
 
 describe 'gulp-rewrite-css', ->
@@ -45,6 +46,21 @@ describe 'gulp-rewrite-css', ->
         log = """rewrite-css rewriting path for url(fonts/OpenSans.woff) in #{inFile} to url("../../fonts/OpenSans.woff")"""
         stripAnsi(gutilStub.log.firstCall.args.join(' ')).should.eql log
         done()
+
+  describe 'with null file', ->
+    it 'should return the file as-is', (done) ->
+      file = new gutil.File
+        base: path.join __dirname, './fixtures/'
+        cwd: __dirname,
+        path: inFile
+        contents: null
+
+      stream = rewriteCss opts
+      stream.on 'data', (processed) ->
+        file.should.be.exactly processed
+        done()
+
+      stream.write file
 
   describe 'with buffers', ->
     it 'should return file.contents as a buffer', (done) ->

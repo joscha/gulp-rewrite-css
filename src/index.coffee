@@ -52,7 +52,6 @@ module.exports = (opt) ->
       return
 
   es.map (file, callback) ->
-    #return callback new gutil.PluginError 'rewrite-css', 'foo'
     if file.isNull()
       callback null, file
 
