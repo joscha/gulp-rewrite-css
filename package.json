@@ -19,7 +19,7 @@
     "node": ">= 0.10"
   },
   "scripts": {
-    "postinstall": "coffee -o lib/ src/",
+    "postinstall": "./node_modules/coffee-script/bin/coffee -o lib/ src/",
     "test": "mocha --compilers coffee:coffee-script/register -R spec",
     "watch": "mocha --compilers coffee:coffee-script/register -R min --watch",
     "coverage": "coffee -o src/ src/ && coffee -o test/ test/ && istanbul cover node_modules/.bin/_mocha --report html -- -R spec -t 3000 -s 2000",
