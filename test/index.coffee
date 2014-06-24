@@ -5,7 +5,7 @@ gulp = require 'gulp'
 proxyquire = require 'proxyquire'
 gutilStub =
   log: ->
-    #console.log(arguments);
+    # console.log.apply(console, arguments);
 rewriteCss = proxyquire '../src',
   'gulp-util': gutilStub
 es = require 'event-stream'
@@ -104,6 +104,27 @@ describe 'gulp-rewrite-css', ->
           expectedLog = """rewrite-css not rewriting absolute path for url(http://www.fonts.com/OpenSans.woff) in #{inFile}"""
           stripAnsi(gutilStub.log.firstCall.args.join(' ')).should.eql expectedLog
           done()
+
+    it 'should rewrite complex URLs', (done) ->
+      cwd = process.cwd()
+      opts.debug = true
+
+      opts.destination = '/var/cdn/'
+      opts.base = '/var/s/'
+      opts.prefix = 'a/b/'
+
+      file = new gutil.File
+        cwd: '/var'
+        path: '/var/s/min/group/style.css'
+        base: '/var/s/'
+        contents: new Buffer 'url(fonts/OpenSans.eot)', 'utf8'
+
+      stream = rewriteCss opts
+      stream.on 'data', (file) ->
+        file.contents.toString('utf8').should.eql 'url("../../a/b/fonts/OpenSans.eot")'
+        done()
+
+      stream.write file
 
   describe 'with streams', ->
     it 'should return file.contents as a stream', (done) ->

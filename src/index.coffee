@@ -17,6 +17,14 @@ URL_REGEX = ///
             \) # A closing bracket
             ///g # We want to replace all the matches
 
+# from http://stackoverflow.com/questions/3446170
+escapeRegExp = (str) ->
+  str.replace /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"
+
+stripPrefix = (prefix, string) ->
+  rgx = new RegExp '^' + escapeRegExp prefix
+  string.replace rgx, ''
+
 cleanMatch = (url) ->
   url = url.trim()
   if (firstChar = url.substr 0, 1) is (url.substr -1) and (firstChar is '"' or firstChar is "'")
@@ -33,14 +41,24 @@ module.exports = (opt) ->
 
   throw new gutil.PluginError PLUGIN_NAME, 'destination directory is mssing' unless opt.destination
 
-  rewriteUrls = (sourceFilePath, data) ->
+  rewriteUrls = (file, data) ->
+    sourceFilePath = file.path
     sourceDir = path.dirname sourceFilePath
-    destinationDir = opt.destination
+
     data.replace URL_REGEX, (match, file) =>
       ret = match
       file = cleanMatch file
+
       if isRelativeUrl file
-        targetUrl = path.join (path.relative destinationDir, sourceDir), file
+        if opt.base and opt.prefix
+          pathToNewCssFile = stripPrefix opt.base, sourceFilePath
+          realImportFileLocation = path.join opt.destination, opt.prefix, file
+          actualCssFile = (path.join opt.destination, pathToNewCssFile)
+          relativeRealTargetImportFile = path.relative path.dirname(actualCssFile), realImportFileLocation
+          targetUrl = relativeRealTargetImportFile
+        else
+          targetUrl = path.join (path.relative opt.destination, sourceDir), file
+
         ret = """url("#{targetUrl.replace('"', '\\"')}")"""
         gutil.log (gutil.colors.magenta PLUGIN_NAME), 'rewriting path for', (gutil.colors.magenta match), 'in', (gutil.colors.magenta sourceFilePath), 'to', (gutil.colors.magenta ret) if opt.debug
       else
@@ -48,7 +66,7 @@ module.exports = (opt) ->
       ret
 
   bufferReplace = (file, data) ->
-    rewriteUrls file.path, data
+    rewriteUrls file, data
 
   streamReplace = (file) ->
     (err, buf, cb) ->
