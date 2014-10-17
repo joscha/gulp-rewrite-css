@@ -156,6 +156,8 @@ describe 'gulp-rewrite-css', ->
       assert 'index.url.with.quotes.css',
               done,
               'index.url.with.quotes.expected.css'
+    it 'should leave data URLs alone', (done) ->
+      assert 'data-urls.css', done, 'data-urls.css'
 
     describe 'Windows', ->
       origSeparator = path.sep
