@@ -6,11 +6,12 @@ proxyquire = require 'proxyquire'
 gutilStub =
   log: ->
     #console.log(arguments);
+path = require 'path'
 rewriteCss = proxyquire '../src',
   'gulp-util': gutilStub
+  'path': path
 es = require 'event-stream'
 Stream = require 'stream'
-path = require 'path'
 fs = require 'fs'
 gutil = require 'gulp-util'
 stripAnsi = require 'strip-ansi'
@@ -152,4 +153,20 @@ describe 'gulp-rewrite-css', ->
     it 'should handle URLs with whitespaces', (done) ->
       assert 'index.whitespaces.css', done
     it 'should handle URLs with a double quote', (done) ->
-      assert 'index.url.with.quotes.css', done, 'index.url.with.quotes.expected.css'
+      assert 'index.url.with.quotes.css',
+              done,
+              'index.url.with.quotes.expected.css'
+
+    describe 'Windows', ->
+      origSeparator = path.sep
+
+      beforeEach ->
+        path.sep = '\\'
+
+      afterEach ->
+        path.sep = origSeparator
+
+      it 'should fix path separators', (done) ->
+        assert 'index.windows.css',
+                done,
+                'index.expected.css'
