@@ -3,6 +3,7 @@
 es = require 'event-stream'
 BufferStreams = require 'bufferstreams'
 gutil = require 'gulp-util'
+magenta = gutil.colors.magenta
 path = require 'path'
 url = require 'url'
 
@@ -19,7 +20,8 @@ URL_REGEX = ///
 
 cleanMatch = (url) ->
   url = url.trim()
-  if (firstChar = url.substr 0, 1) is (url.substr -1) and (firstChar is '"' or firstChar is "'")
+  firstChar = url.substr 0, 1
+  if firstChar is (url.substr -1) and (firstChar is '"' or firstChar is "'")
     url = url.substr 1, url.length - 2
   url
 
@@ -31,20 +33,33 @@ module.exports = (opt) ->
   opt ?= {}
   opt.debug ?= false
 
-  throw new gutil.PluginError PLUGIN_NAME, 'destination directory is mssing' unless opt.destination
+  unless opt.destination
+    throw new gutil.PluginError PLUGIN_NAME, 'destination directory is mssing'
 
   rewriteUrls = (sourceFilePath, data) ->
     sourceDir = path.dirname sourceFilePath
     destinationDir = opt.destination
-    data.replace URL_REGEX, (match, file) =>
+    data.replace URL_REGEX, (match, file) ->
       ret = match
       file = cleanMatch file
       if isRelativeUrl file
         targetUrl = path.join (path.relative destinationDir, sourceDir), file
         ret = """url("#{targetUrl.replace('"', '\\"')}")"""
-        gutil.log (gutil.colors.magenta PLUGIN_NAME), 'rewriting path for', (gutil.colors.magenta match), 'in', (gutil.colors.magenta sourceFilePath), 'to', (gutil.colors.magenta ret) if opt.debug
+        if opt.debug
+          gutil.log (magenta PLUGIN_NAME),
+                    'rewriting path for',
+                    (magenta match),
+                    'in',
+                    (magenta sourceFilePath),
+                    'to',
+                    (magenta ret)
       else
-        gutil.log (gutil.colors.magenta PLUGIN_NAME), 'not rewriting absolute path for', (gutil.colors.magenta match), 'in', (gutil.colors.magenta sourceFilePath) if opt.debug
+        if opt.debug
+          gutil.log (magenta PLUGIN_NAME),
+                    'not rewriting absolute path for',
+                    (magenta match),
+                    'in',
+                    (magenta sourceFilePath)
       ret
 
   bufferReplace = (file, data) ->

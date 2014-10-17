@@ -49,7 +49,10 @@ describe 'gulp-rewrite-css', ->
       .pipe(rewriteCss(opts))
       .pipe es.map (file) ->
         gutilStub.log.calledOnce.should.be.true
-        log = """rewrite-css rewriting path for url(fonts/OpenSans.woff) in #{inFile} to url("../../fonts/OpenSans.woff")"""
+        log = """
+              rewrite-css rewriting path for url(fonts/OpenSans.woff) \
+              in #{inFile} to url("../../fonts/OpenSans.woff")
+              """
         stripAnsi(gutilStub.log.firstCall.args.join(' ')).should.eql log
         done()
 
@@ -139,7 +142,7 @@ describe 'gulp-rewrite-css', ->
       gulp.src(inFile)
       .pipe(rewriteCss(opts))
       .pipe es.map (file) ->
-        expected.should.eql file.contents.toString()
+        file.contents.toString().should.eql expected
         done()
 
     it 'should handle single quoted URLs', (done) ->
