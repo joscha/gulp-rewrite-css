@@ -11,10 +11,10 @@
   ],
   "main": "./lib/index",
   "dependencies": {
-    "coffee-script": "~1.7.1",
-    "event-stream": "~3.1.5",
+    "coffee-script": "~1.8.0",
+    "event-stream": "~3.1.7",
     "bufferstreams": "0.0.2",
-    "gulp-util": "~2.2.14"
+    "gulp-util": "~3.0.1"
   },
   "engines": {
     "node": ">= 0.10"
@@ -27,15 +27,15 @@
     "coveralls": "coffee -o src/ src/ && coffee -o test/ test/ && istanbul cover _mocha --report lcovonly -- -R spec -t 3000 -s 2000 && cat ./coverage/lcov.info | coveralls"
   },
   "devDependencies": {
-    "mocha": "~1.18.2",
-    "gulp": "~3.6.2",
-    "should": "~3.3.1",
-    "sinon": "~1.9.1",
-    "proxyquire": "~0.6.0",
-    "strip-ansi": "~0.2.1",
-    "istanbul": "~0.2.8",
+    "mocha": "~1.21.5",
+    "gulp": "~3.8.8",
+    "should": "~4.0.4",
+    "sinon": "~1.10.3",
+    "proxyquire": "~1.0.1",
+    "strip-ansi": "~2.0.0",
+    "istanbul": "~0.3.2",
     "mocha-lcov-reporter": "0.0.1",
-    "coveralls": "~2.10.0"
+    "coveralls": "~2.11.2"
   },
   "licenses": [
     {

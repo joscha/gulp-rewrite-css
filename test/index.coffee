@@ -101,8 +101,12 @@ describe 'gulp-rewrite-css', ->
         .pipe(rewriteCss(opts))
         .pipe es.map (file) ->
           gutilStub.log.calledOnce.should.be.true
-          expectedLog = """rewrite-css not rewriting absolute path for url(http://www.fonts.com/OpenSans.woff) in #{inFile}"""
-          stripAnsi(gutilStub.log.firstCall.args.join(' ')).should.eql expectedLog
+          expectedLog = """
+          rewrite-css not rewriting absolute path for \
+          url(http://www.fonts.com/OpenSans.woff) in #{inFile}
+          """
+          args = stripAnsi(gutilStub.log.firstCall.args.join(' '))
+          args.should.eql expectedLog
           done()
 
   describe 'with streams', ->
@@ -122,7 +126,7 @@ describe 'gulp-rewrite-css', ->
       .pipe(rewriteCss(opts))
       .pipe es.map (file) ->
         file.contents.pipe es.wait (err, data) ->
-          expected.should.be.eql data
+          expected.should.be.eql data.toString()
           done()
 
   describe 'edge cases', ->
