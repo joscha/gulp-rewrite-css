@@ -156,6 +156,9 @@ describe 'gulp-rewrite-css', ->
       assert 'index.url.with.quotes.css',
               done,
               'index.url.with.quotes.expected.css'
+    it 'should leave relative URLs starting with slash alone', (done) ->
+      assert 'relative-slash.css', done, 'relative-slash.css'
+      
     it 'should leave data URLs alone', (done) ->
       assert 'data-urls.css', done, 'data-urls.css'
 

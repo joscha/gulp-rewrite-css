@@ -29,6 +29,8 @@ isRelativeUrl = (u) ->
   parts = url.parse u, false, true
   not parts.protocol and not parts.host
 
+isRelativeToBase = (u) -> '/' is u.substr 0, 1
+
 module.exports = (opt) ->
   opt ?= {}
   opt.debug ?= false
@@ -42,7 +44,7 @@ module.exports = (opt) ->
     data.replace URL_REGEX, (match, file) ->
       ret = match
       file = cleanMatch file
-      if isRelativeUrl file
+      if (isRelativeUrl file) and not (isRelativeToBase file)
         targetUrl = path.join (path.relative destinationDir, sourceDir), file
         # fix for windows paths
         targetUrl = targetUrl.replace '\\', '/' if path.sep is '\\'
