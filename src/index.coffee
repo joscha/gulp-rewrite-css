@@ -47,7 +47,7 @@ module.exports = (opt) ->
       if (isRelativeUrl file) and not (isRelativeToBase file)
         targetUrl = path.join (path.relative destinationDir, sourceDir), file
         # fix for windows paths
-        targetUrl = targetUrl.replace '\\', '/' if path.sep is '\\'
+        targetUrl = targetUrl.replace ///\\///g, '/' if path.sep is '\\'
         ret = """url("#{targetUrl.replace('"', '\\"')}")"""
         if opt.debug
           gutil.log (magenta PLUGIN_NAME),
