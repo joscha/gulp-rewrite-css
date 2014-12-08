@@ -28,13 +28,13 @@
     "coveralls": "coffee -o src/ src/ && coffee -o test/ test/ && istanbul cover _mocha --report lcovonly -- -R spec -t 3000 -s 2000 && cat ./coverage/lcov.info | coveralls"
   },
   "devDependencies": {
-    "mocha": "~1.21.5",
-    "gulp": "~3.8.8",
-    "should": "~4.0.4",
-    "sinon": "~1.10.3",
-    "proxyquire": "~1.0.1",
+    "mocha": "~2.0.1",
+    "gulp": "~3.8.10",
+    "should": "~4.3.1",
+    "sinon": "~1.12.1",
+    "proxyquire": "~1.1.0",
     "strip-ansi": "~2.0.0",
-    "istanbul": "~0.3.2",
+    "istanbul": "~0.3.5",
     "mocha-lcov-reporter": "0.0.1",
     "coveralls": "~2.11.2"
   },
