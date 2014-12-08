@@ -158,7 +158,7 @@ describe 'gulp-rewrite-css', ->
               'index.url.with.quotes.expected.css'
     it 'should leave relative URLs starting with slash alone', (done) ->
       assert 'relative-slash.css', done, 'relative-slash.css'
-      
+
     it 'should leave data URLs alone', (done) ->
       assert 'data-urls.css', done, 'data-urls.css'
 
@@ -174,4 +174,4 @@ describe 'gulp-rewrite-css', ->
       it 'should fix path separators', (done) ->
         assert 'index.windows.css',
                 done,
-                'index.expected.css'
+                'index.windows.expected.css'

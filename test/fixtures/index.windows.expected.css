@@ -4,5 +4,5 @@
   font-weight: 400;
   src:  local('Open Sans'),
         local('OpenSans'),
-        url(multiple\directories\fonts\OpenSans.woff) format('woff');
+        url("../../multiple/directories/fonts/OpenSans.woff") format('woff');
 }
