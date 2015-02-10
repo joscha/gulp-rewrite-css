@@ -1,4 +1,10 @@
-#[gulp](https://github.com/gulpjs/gulp)-rewrite-css [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependency Status][depstat-image]][depstat-url]
+#[gulp](https://github.com/gulpjs/gulp)-rewrite-css
+
+[![NPM version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
+[![Coverage Status][coveralls-image]][coveralls-url]
+[![Dependency Status][depstat-image]][depstat-url]
+[![devDependency Status][devdepstat-image]][devdepstat-url]
 
 A gulp plugin that allows rewriting url references in CSS
 
@@ -57,3 +63,6 @@ MIT (c) 2014 Joscha Feth <joscha@feth.com>
 
 [depstat-url]: https://david-dm.org/joscha/gulp-rewrite-css
 [depstat-image]: https://david-dm.org/joscha/gulp-rewrite-css.svg?theme=shields.io
+
+[devdepstat-url]: https://david-dm.org/joscha/gulp-rewrite-css#info=devDependencies
+[devdepstat-image]: https://david-dm.org/joscha/gulp-rewrite-css/dev-status.svg?theme=shields.io
