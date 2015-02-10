@@ -49,7 +49,7 @@ gulp.task('my-rewrite', function() {
 
 ## License
 
-MIT (c) 2014 Joscha Feth <joscha@feth.com>
+MIT (c) 2015 Joscha Feth <joscha@feth.com>
 
 [npm-url]: https://npmjs.org/package/gulp-rewrite-css
 [npm-image]: http://img.shields.io/npm/v/gulp-rewrite-css.svg
