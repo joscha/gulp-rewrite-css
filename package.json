@@ -1,7 +1,7 @@
 {
   "name": "gulp-rewrite-css",
   "description": "Rewrite url references in CSS",
-  "version": "0.0.4",
+  "version": "0.0.5-beta",
 
   "repository": "https://github.com/joscha/gulp-rewrite-css.git",
   "homepage": "https://github.com/joscha/gulp-rewrite-css",
@@ -12,7 +12,6 @@
   ],
   "main": "./lib/index",
   "dependencies": {
-    "coffee-script": "~1.9.0",
     "event-stream": "~3.2.2",
     "bufferstreams": "1.0.1",
     "gulp-util": "~3.0.3"
@@ -21,7 +20,7 @@
     "node": ">= 0.10"
   },
   "scripts": {
-    "postinstall": "./node_modules/coffee-script/bin/coffee -o lib/ src/",
+    "prepublish": "./node_modules/coffee-script/bin/coffee -o lib/ src/",
     "test": "mocha --compilers coffee:coffee-script/register -R spec",
     "watch": "mocha --compilers coffee:coffee-script/register -R min --watch",
     "coverage": "coffee -o src/ src/ && coffee -o test/ test/ && istanbul cover node_modules/.bin/_mocha --report html -- -R spec -t 3000 -s 2000",
@@ -36,7 +35,8 @@
     "strip-ansi": "~2.0.1",
     "istanbul": "~0.3.5",
     "mocha-lcov-reporter": "0.0.1",
-    "coveralls": "~2.11.2"
+    "coveralls": "~2.11.2",
+    "coffee-script": "~1.9.0"
   },
   "licenses": [
     {
