@@ -18,6 +18,15 @@ URL_REGEX = ///
             \) # A closing bracket
             ///g # We want to replace all the matches
 
+IMPORT_REGEX = ///
+  @import
+  \s* # Arbitrary white-spaces
+  (["']) # the path must be quoted
+  \s* # Arbitrary white-spaces
+  ([^'"]+) # Anything but a closing quote
+  \1 # The right closing quote
+  ///g # We want to replace all the matches
+
 cleanMatch = (url) ->
   url = url.trim()
   firstChar = url.substr 0, 1
@@ -38,33 +47,53 @@ module.exports = (opt) ->
   unless opt.destination
     throw new gutil.PluginError PLUGIN_NAME, 'destination directory is mssing'
 
-  rewriteUrls = (sourceFilePath, data) ->
-    sourceDir = path.dirname sourceFilePath
+  mungePath = (match, sourceFilePath, file) ->
     destinationDir = opt.destination
+    sourceDir = path.dirname sourceFilePath
+
+    file = cleanMatch file
+    if (isRelativeUrl file) and not (isRelativeToBase file)
+      targetUrl = path.join (path.relative destinationDir, sourceDir), file
+      # fix for windows paths
+      targetUrl = targetUrl.replace ///\\///g, '/' if path.sep is '\\'
+      return targetUrl.replace "'", "\\'"
+    else if opt.debug
+      gutil.log (magenta PLUGIN_NAME),
+                'not rewriting absolute path for',
+                (magenta match),
+                'in',
+                (magenta sourceFilePath)
+
+  rewriteUrls = (sourceFilePath, data) ->
     data.replace URL_REGEX, (match, file) ->
-      ret = match
-      file = cleanMatch file
-      if (isRelativeUrl file) and not (isRelativeToBase file)
-        targetUrl = path.join (path.relative destinationDir, sourceDir), file
-        # fix for windows paths
-        targetUrl = targetUrl.replace ///\\///g, '/' if path.sep is '\\'
-        ret = """url("#{targetUrl.replace('"', '\\"')}")"""
-        if opt.debug
-          gutil.log (magenta PLUGIN_NAME),
-                    'rewriting path for',
-                    (magenta match),
-                    'in',
-                    (magenta sourceFilePath),
-                    'to',
-                    (magenta ret)
-      else
-        if opt.debug
-          gutil.log (magenta PLUGIN_NAME),
-                    'not rewriting absolute path for',
-                    (magenta match),
-                    'in',
-                    (magenta sourceFilePath)
-      ret
+      newPath = mungePath match, sourceFilePath, file
+      return match unless newPath
+
+      ret = """url("#{newPath.replace('"', '\\"')}")"""
+      if opt.debug
+        gutil.log (magenta PLUGIN_NAME),
+                  'rewriting path for',
+                  (magenta match),
+                  'in',
+                  (magenta sourceFilePath),
+                  'to',
+                  (magenta ret)
+      return ret
+
+    .replace IMPORT_REGEX, (match, _, file) ->
+      newPath = mungePath match, sourceFilePath, file
+      return match unless newPath
+
+      ret = """@import '#{newPath.replace("'", "\\'")}'"""
+      if opt.debug
+        gutil.log (magenta PLUGIN_NAME),
+                  'rewriting path for',
+                  (magenta match),
+                  'in',
+                  (magenta sourceFilePath),
+                  'to',
+                  (magenta ret)
+      return ret
 
   bufferReplace = (file, data) ->
     rewriteUrls file.path, data
