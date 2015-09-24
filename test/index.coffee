@@ -175,3 +175,24 @@ describe 'gulp-rewrite-css', ->
         assert 'index.windows.css',
                 done,
                 'index.windows.expected.css'
+
+  describe 'with enhanced syntax', ->
+
+    beforeEach -> 
+      opts = 
+        enhanced:
+          re: /OpenSans/
+          subst: 'ArbitraryReplacement'
+
+      inFile = getFixturePath 'index.enhanced.css'
+      expected = loadFixture 'index.enhanced.expected.css'
+
+    assert = (done) ->
+      gulp.src(inFile)
+        .pipe(rewriteCss(opts))
+        .pipe es.map (file)->
+          file.contents.toString().should.eql expected 
+          done()
+
+    it 'should rewrite the name of the font to "ArbitraryReplacement"', (done)->
+      assert(done)

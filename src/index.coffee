@@ -4,6 +4,7 @@ es = require 'event-stream'
 BufferStreams = require 'bufferstreams'
 gutil = require 'gulp-util'
 magenta = gutil.colors.magenta
+green = gutil.colors.green
 path = require 'path'
 url = require 'url'
 
@@ -35,7 +36,12 @@ module.exports = (opt) ->
   opt ?= {}
   opt.debug ?= false
 
-  unless opt.destination
+  if opt.enhanced?
+    unless opt.enhanced?.re && opt.enhanced.re instanceof RegExp
+      throw new gutil.PluginError PLUGIN_NAME, 'enhanced.re must be an instance of RegExp'
+    unless opt.enhanced.subst?
+      throw new gutil.PluginError PLUGIN_NAME, 'enhanced.subst must be specified'
+  else unless opt.destination
     throw new gutil.PluginError PLUGIN_NAME, 'destination directory is mssing'
 
   rewriteUrls = (sourceFilePath, data) ->
@@ -44,26 +50,38 @@ module.exports = (opt) ->
     data.replace URL_REGEX, (match, file) ->
       ret = match
       file = cleanMatch file
-      if (isRelativeUrl file) and not (isRelativeToBase file)
-        targetUrl = path.join (path.relative destinationDir, sourceDir), file
-        # fix for windows paths
-        targetUrl = targetUrl.replace ///\\///g, '/' if path.sep is '\\'
-        ret = """url("#{targetUrl.replace('"', '\\"')}")"""
+      if opt.enhanced?
+        ret = 'url(\'' + file.replace(opt.enhanced.re, opt.enhanced.subst) + '\')'
         if opt.debug
-          gutil.log (magenta PLUGIN_NAME),
-                    'rewriting path for',
-                    (magenta match),
-                    'in',
-                    (magenta sourceFilePath),
+          gutil.log (magenta PLUGIN_NAME), 
+                    'rewriting path for', 
+                    (magenta file),
                     'to',
-                    (magenta ret)
-      else
-        if opt.debug
-          gutil.log (magenta PLUGIN_NAME),
-                    'not rewriting absolute path for',
-                    (magenta match),
+                    (magenta ret),
                     'in',
-                    (magenta sourceFilePath)
+                    (green sourceFilePath)
+
+      else 
+        if (isRelativeUrl file) and not (isRelativeToBase file)
+          targetUrl = path.join (path.relative destinationDir, sourceDir), file
+          # fix for windows paths
+          targetUrl = targetUrl.replace ///\\///g, '/' if path.sep is '\\'
+          ret = """url("#{targetUrl.replace('"', '\\"')}")"""
+          if opt.debug
+            gutil.log (magenta PLUGIN_NAME),
+                      'rewriting path for',
+                      (magenta match),
+                      'in',
+                      (magenta sourceFilePath),
+                      'to',
+                      (magenta ret)
+        else
+          if opt.debug
+            gutil.log (magenta PLUGIN_NAME),
+                      'not rewriting absolute path for',
+                      (magenta match),
+                      'in',
+                      (magenta sourceFilePath)
       ret
 
   bufferReplace = (file, data) ->

@@ -47,6 +47,13 @@ gulp.task('my-rewrite', function() {
 * `destination` (required) - the target directory for the processed CSS. Paths are rewritten relatively to that directory.
 * `[debug]` (optional, defaults to false) - whether to log what gulp-rewrite-css is doing
 
+#### Advanced Usage
+
+If you know exactly how you want your URLs rewritten, the following alternate syntax is allowed:
+
+* `enhanced.re` (required) - a [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) object.  It will be matched against the bare URL (url() and quotes are stripped)
+* `enhanced.subst` (required) - the substitution string for the eventual call to [String.prototype.replace()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace).
+
 ## License
 
 MIT (c) 2015 Joscha Feth <joscha@feth.com>
