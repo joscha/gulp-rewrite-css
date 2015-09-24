@@ -51,7 +51,7 @@ module.exports = (opt) ->
       ret = match
       file = cleanMatch file
       if opt.enhanced?
-        ret = 'url("' + file.replace(opt.enhanced.re, opt.enhanced.subst) + '")'
+        ret = 'url(\'' + file.replace(opt.enhanced.re, opt.enhanced.subst) + '\')'
         if opt.debug
           gutil.log (magenta PLUGIN_NAME), 
                     'rewriting path for', 
