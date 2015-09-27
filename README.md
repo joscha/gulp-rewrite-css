@@ -6,7 +6,7 @@
 [![Dependency Status][depstat-image]][depstat-url]
 [![devDependency Status][devdepstat-image]][devdepstat-url]
 
-A gulp plugin that allows rewriting url references in CSS
+A gulp plugin that allows rewriting url & @import references in CSS
 
 ## Information
 
