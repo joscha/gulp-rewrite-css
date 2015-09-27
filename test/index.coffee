@@ -183,3 +183,27 @@ describe 'gulp-rewrite-css', ->
 
     it 'should rewrite @import statements', (done) ->
       assert 'imports.css', done, 'imports.expected.css'
+
+  describe 'use adaptPath option', ->
+    opts =
+      destination: 'path/to/destination'
+
+    it 'should call adaptPath with the correct parameters', (done) ->
+      opts.adaptPath = sinon.stub().returns('../my/arbitrary/file.css')
+
+      test = ->
+        opts.adaptPath.calledTwice.should.be.true
+        opts.adaptPath.getCall(0).args[0].should.be.eql
+          sourceDir: getFixturePath()
+          sourceFile: getFixturePath('opt.adaptPath.css')
+          destinationDir: opts.destination
+          targetFile: 'my/1.css'
+
+        opts.adaptPath.getCall(1).args[0].should.be.eql
+          sourceDir: getFixturePath()
+          sourceFile: getFixturePath('opt.adaptPath.css')
+          destinationDir: opts.destination
+          targetFile: 'my/2.css'
+
+        done()
+      assert 'opt.adaptPath.css', test, 'opt.adaptPath.expected.css'

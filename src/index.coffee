@@ -44,19 +44,29 @@ isRelativeToBase = (u) -> '/' is u.substr 0, 1
 module.exports = (opt) ->
   opt ?= {}
   opt.debug ?= false
+  opt.adaptPath ?= (ctx) ->
+    path.join (path.relative ctx.destinationDir, ctx.sourceDir), ctx.targetFile
+
+  unless typeof opt.adaptPath is 'function'
+    throw new gutil.PluginError PLUGIN_NAME, 'adaptPath method is mssing'
 
   unless opt.destination
     throw new gutil.PluginError PLUGIN_NAME, 'destination directory is mssing'
 
   mungePath = (match, sourceFilePath, file) ->
-    destinationDir = opt.destination
-    sourceDir = path.dirname sourceFilePath
-
     if (isRelativeUrl file) and not (isRelativeToBase file)
-      targetUrl = path.join (path.relative destinationDir, sourceDir), file
-      # fix for windows paths
-      targetUrl = targetUrl.replace ///\\///g, '/' if path.sep is '\\'
-      return targetUrl.replace "'", "\\'"
+      destinationDir = opt.destination
+      sourceDir = path.dirname sourceFilePath
+      targetUrl = opt.adaptPath
+        sourceDir: sourceDir
+        sourceFile: sourceFilePath
+        destinationDir: destinationDir
+        targetFile: file
+
+      if typeof targetUrl is 'string'
+        # fix for windows paths
+        targetUrl = targetUrl.replace ///\\///g, '/' if path.sep is '\\'
+        return targetUrl.replace "'", "\\'"
     else if opt.debug
       gutil.log (magenta PLUGIN_NAME),
                 'not rewriting absolute path for',

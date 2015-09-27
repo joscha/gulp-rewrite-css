@@ -1,0 +1,4 @@
+@import url("../my/arbitrary/file.css");
+.x {
+  background: url("../my/arbitrary/file.css");
+}
