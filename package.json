@@ -20,11 +20,11 @@
     "node": ">= 0.10"
   },
   "scripts": {
-    "prepublish": "./node_modules/coffee-script/bin/coffee -o lib/ src/",
+    "prepublish": "./node_modules/.bin/coffee -o lib/ src/",
     "test": "mocha --compilers coffee:coffee-script/register -R spec",
     "watch": "mocha --compilers coffee:coffee-script/register -R min --watch",
-    "coverage": "coffee -o src/ src/ && coffee -o test/ test/ && istanbul cover node_modules/.bin/_mocha --report html -- -R spec -t 3000 -s 2000",
-    "coveralls": "coffee -o src/ src/ && coffee -o test/ test/ && istanbul cover _mocha --report lcovonly -- -R spec -t 3000 -s 2000 && cat ./coverage/lcov.info | coveralls"
+    "coverage": "./node_modules/.bin/coffee -o src/ src/ && ./node_modules/.bin/coffee -o test/ test/ && ./node_modules/.bin/istanbul cover node_modules/.bin/_mocha --report html -- -R spec -t 3000 -s 2000",
+    "coveralls": "./node_modules/.bin/coffee -o src/ src/ && ./node_modules/.bin/coffee -o test/ test/ && ./node_modules/.bin/istanbul cover _mocha --report lcovonly -- -R spec -t 3000 -s 2000 && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "devDependencies": {
     "mocha": "~2.1.0",
