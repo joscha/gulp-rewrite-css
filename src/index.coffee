@@ -4,6 +4,7 @@ es = require 'event-stream'
 BufferStreams = require 'bufferstreams'
 gutil = require 'gulp-util'
 magenta = gutil.colors.magenta
+green = gutil.colors.green
 path = require 'path'
 url = require 'url'
 
@@ -72,7 +73,7 @@ module.exports = (opt) ->
                 'in',
                 (magenta sourceFilePath),
                 'to',
-                (magenta destinationFilePath)
+                (green destinationFilePath)
 
   rewriteUrls = (sourceFilePath, data) ->
 
