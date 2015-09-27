@@ -52,7 +52,6 @@ module.exports = (opt) ->
     destinationDir = opt.destination
     sourceDir = path.dirname sourceFilePath
 
-    file = cleanMatch file
     if (isRelativeUrl file) and not (isRelativeToBase file)
       targetUrl = path.join (path.relative destinationDir, sourceDir), file
       # fix for windows paths
@@ -78,6 +77,7 @@ module.exports = (opt) ->
   rewriteUrls = (sourceFilePath, data) ->
 
     replaceCallback = (match, file, prefix) ->
+      file = cleanMatch file
       newPath = mungePath match, sourceFilePath, file
       return match unless newPath
 
