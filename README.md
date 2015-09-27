@@ -48,12 +48,12 @@ gulp.task('my-rewrite', function() {
 * `[debug]` (optional, boolean, defaults to false) - whether to log what gulp-rewrite-css is doing
 * `[adaptPath]` (optional, Function, defaults to the internal rewriting method of gulp-rewrite-css) - will be passed a context hash that contains the following options:
 
-	| key              | description                                                             |
-	|------------------|-------------------------------------------------------------------------|
-	| `sourceDir`      | the path in which the currently processed CSS file resides in           |
-	| `sourceFile`     | the path to the currently processed CSS file                            |
-	| `destinationDir` | the path of the target directory where the CSS file ends in             |
-	| `targetFile`     | the path of the target file (e.g. the contents of `url(…)` or `@import` |
+	| key              | description                                                              |
+	|------------------|--------------------------------------------------------------------------|
+	| `sourceDir`      | the path in which the currently processed CSS file resides in            |
+	| `sourceFile`     | the path to the currently processed CSS file                             |
+	| `destinationDir` | the path of the target directory where the CSS file ends in              |
+	| `targetFile`     | the path of the target file (e.g. the contents of `url(…)` or `@import`) |
 
 ## License
 
