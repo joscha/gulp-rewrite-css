@@ -38,9 +38,5 @@
     "coveralls": "~2.11.2",
     "coffee-script": "~1.10.0"
   },
-  "licenses": [
-    {
-      "type": "MIT"
-    }
-  ]
+  "license": "MIT"
 }
