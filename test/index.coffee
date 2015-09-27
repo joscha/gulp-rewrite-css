@@ -28,6 +28,17 @@ describe 'gulp-rewrite-css', ->
   expected = null
   inFile = null
 
+  assert = (file, done, expectedOverride = null) ->
+    inFile = getFixturePath file
+    if expectedOverride
+      expected = loadFixture expectedOverride
+
+    gulp.src(inFile)
+    .pipe(rewriteCss(opts))
+    .pipe es.map (file) ->
+      file.contents.toString().should.eql expected
+      done()
+
   beforeEach ->
     sinon.spy gutilStub, 'log'
     opts =
@@ -135,17 +146,6 @@ describe 'gulp-rewrite-css', ->
 
   describe 'edge cases', ->
 
-    assert = (file, done, expectedOverride = null) ->
-      inFile = getFixturePath file
-      if expectedOverride
-        expected = loadFixture expectedOverride
-
-      gulp.src(inFile)
-      .pipe(rewriteCss(opts))
-      .pipe es.map (file) ->
-        file.contents.toString().should.eql expected
-        done()
-
     it 'should handle single quoted URLs', (done) ->
       assert 'index.quotes.single.css', done
     it 'should handle double quoted URLs', (done) ->
@@ -175,3 +175,11 @@ describe 'gulp-rewrite-css', ->
         assert 'index.windows.css',
                 done,
                 'index.windows.expected.css'
+
+  describe '@import rewriting', ->
+    beforeEach ->
+      opts =
+        destination: getFixturePath 'another/dir'
+
+    it 'should rewrite @import statements', (done) ->
+      assert 'imports.css', done, 'imports.expected.css'
