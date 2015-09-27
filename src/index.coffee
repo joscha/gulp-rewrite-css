@@ -64,36 +64,31 @@ module.exports = (opt) ->
                 'in',
                 (magenta sourceFilePath)
 
+  logRewrite = (match, sourceFilePath, destinationFilePath) ->
+    if opt.debug
+      gutil.log (magenta PLUGIN_NAME),
+                'rewriting path for',
+                (magenta match),
+                'in',
+                (magenta sourceFilePath),
+                'to',
+                (magenta destinationFilePath)
+
   rewriteUrls = (sourceFilePath, data) ->
-    data.replace URL_REGEX, (match, file) ->
+
+    replaceCallback = (match, file, prefix) ->
       newPath = mungePath match, sourceFilePath, file
       return match unless newPath
 
-      ret = """url("#{newPath.replace('"', '\\"')}")"""
-      if opt.debug
-        gutil.log (magenta PLUGIN_NAME),
-                  'rewriting path for',
-                  (magenta match),
-                  'in',
-                  (magenta sourceFilePath),
-                  'to',
-                  (magenta ret)
+      ret = """#{prefix}url("#{newPath.replace('"', '\\"')}")"""
+      logRewrite match, sourceFilePath, ret
       return ret
 
+    data
+    .replace URL_REGEX, (match, file) ->
+      replaceCallback match, file, ''
     .replace IMPORT_REGEX, (match, _, file) ->
-      newPath = mungePath match, sourceFilePath, file
-      return match unless newPath
-
-      ret = """@import '#{newPath.replace("'", "\\'")}'"""
-      if opt.debug
-        gutil.log (magenta PLUGIN_NAME),
-                  'rewriting path for',
-                  (magenta match),
-                  'in',
-                  (magenta sourceFilePath),
-                  'to',
-                  (magenta ret)
-      return ret
+      replaceCallback match, file, '@import '
 
   bufferReplace = (file, data) ->
     rewriteUrls file.path, data
