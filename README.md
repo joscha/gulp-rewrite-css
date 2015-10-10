@@ -24,11 +24,11 @@ npm install gulp-rewrite-css --save-dev
 ## Usage
 
 ```javascript
-var gulp = require('gulp'),
-    rewriteCSS = require('gulp-rewrite-css');
+var gulp = require('gulp');
+var rewriteCSS = require('gulp-rewrite-css');
 
 gulp.task('my-rewrite', function() {
-  var dest = './dist/'
+  var dest = './dist/';
   return gulp.src('./static/css/*.css')
     .pipe(rewriteCSS({destination:dest}))
     .pipe(gulp.dest(dest));
