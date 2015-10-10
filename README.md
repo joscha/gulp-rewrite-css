@@ -10,10 +10,10 @@ A gulp plugin that allows rewriting url & @import references in CSS
 
 ## Information
 
-| Package      | gulp-rewrite-css                            |
-|--------------|---------------------------------------------|
-| Description  | Rewrite `url(...)` references in CSS files. |
-| Node version | >= 0.10                                     |
+| Package      | gulp-rewrite-css                                        |
+|--------------|---------------------------------------------------------|
+| Description  | Rewrite `url(…)` and `@import` references in CSS files. |
+| Node version | >= 0.10                                                 |
 
 ## Installation
 
