@@ -5,7 +5,7 @@ gulp = require 'gulp'
 proxyquire = require 'proxyquire'
 gutilStub =
   log: ->
-    #console.log(arguments);
+    #console.log(arguments)
 path = require 'path'
 rewriteCss = proxyquire '../src',
   'gulp-util': gutilStub
