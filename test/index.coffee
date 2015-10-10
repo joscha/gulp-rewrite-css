@@ -159,8 +159,11 @@ describe 'gulp-rewrite-css', ->
     it 'should leave relative URLs starting with slash alone', (done) ->
       assert 'relative-slash.css', done, 'relative-slash.css'
 
-    it 'should leave data URLs alone', (done) ->
-      assert 'data-urls.css', done, 'data-urls.css'
+    describe 'data-urls', ->
+      it 'should be left alone', (done) ->
+        assert 'data-urls.css', done, 'data-urls.css'
+      it 'should not break on weird characters within a data-url', (done) ->
+        assert 'data-urls-svg.css', done, 'data-urls-svg.css'
 
     describe 'Windows', ->
       origSeparator = path.sep

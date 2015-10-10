@@ -15,6 +15,7 @@ URL_REGEX = ///
             \s* # Arbitrary white-spaces
             \(  # An opening bracket
             \s* # Arbitrary white-spaces
+            (?!["']?data:) # explicitly don't match data-urls
             ([^\)]+) # Anything but a closing bracket
             \) # A closing bracket
             ///g # We want to replace all the matches
