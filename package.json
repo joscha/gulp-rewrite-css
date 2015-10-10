@@ -14,7 +14,7 @@
   "dependencies": {
     "event-stream": "~3.3.1",
     "bufferstreams": "~1.1.0",
-    "gulp-util": "~3.0.3"
+    "gulp-util": "~3.0.6"
   },
   "engines": {
     "node": ">= 0.10"
@@ -31,11 +31,11 @@
     "gulp": "~3.9.0",
     "should": "~7.1.0",
     "sinon": "~1.17.1",
-    "proxyquire": "~1.7.2",
+    "proxyquire": "~1.7.3",
     "strip-ansi": "~3.0.0",
-    "istanbul": "~0.3.5",
+    "istanbul": "~0.3.22",
     "mocha-lcov-reporter": "1.0.0",
-    "coveralls": "~2.11.2",
+    "coveralls": "~2.11.4",
     "coffee-script": "~1.10.0"
   },
   "license": "MIT"
