@@ -2,7 +2,6 @@
   "name": "gulp-rewrite-css",
   "description": "Rewrite url references in CSS",
   "version": "0.0.7",
-
   "repository": "https://github.com/joscha/gulp-rewrite-css.git",
   "homepage": "https://github.com/joscha/gulp-rewrite-css",
   "keywords": [
@@ -12,7 +11,7 @@
   ],
   "main": "./lib/index",
   "dependencies": {
-    "event-stream": "~3.3.1",
+    "event-stream": "~3.3.2",
     "bufferstreams": "~1.1.0",
     "gulp-util": "~3.0.6"
   },
