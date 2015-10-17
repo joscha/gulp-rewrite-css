@@ -32,7 +32,7 @@
     "sinon": "~1.17.1",
     "proxyquire": "~1.7.3",
     "strip-ansi": "~3.0.0",
-    "istanbul": "~0.3.22",
+    "istanbul": "~0.4.0",
     "mocha-lcov-reporter": "1.0.0",
     "coveralls": "~2.11.4",
     "coffee-script": "~1.10.0"
