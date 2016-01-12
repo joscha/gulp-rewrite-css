@@ -28,7 +28,7 @@
   "devDependencies": {
     "mocha": "~2.3.3",
     "gulp": "~3.9.0",
-    "should": "~8.0.2",
+    "should": "~8.1.0",
     "sinon": "~1.17.1",
     "proxyquire": "~1.7.3",
     "strip-ansi": "~3.0.0",
