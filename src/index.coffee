@@ -74,6 +74,7 @@ module.exports = (opt) ->
                 (magenta match),
                 'in',
                 (magenta sourceFilePath)
+      return
 
   logRewrite = (match, sourceFilePath, destinationFilePath) ->
     if opt.debug
