@@ -120,14 +120,17 @@ module.exports = (opt) ->
   es.map (file, callback) ->
     if file.isNull()
       callback null, file
+      return
 
     if file.isStream()
       replacementFn = streamReplace opt, file
       file.contents = file.contents.pipe new BufferStreams streamReplace file
       callback null, file
+      return
 
     if file.isBuffer()
       newFile = file.clone()
       newContents = bufferReplace file, String newFile.contents
       newFile.contents = new Buffer newContents
       callback null, newFile
+      return
