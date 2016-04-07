@@ -25,6 +25,9 @@
     "coverage": "coffee -o src src && coffee -o test test && istanbul cover _mocha --report html -- -R spec -t 3000 -s 2000",
     "coveralls": "coffee -o src src && coffee -o test test && istanbul cover _mocha --report lcovonly -- -R spec -t 3000 -s 2000 && cat ./coverage/lcov.info | coveralls"
   },
+  "files": [
+    "lib"
+  ],
   "devDependencies": {
     "mocha": "~2.4.2",
     "gulp": "~3.9.0",
