@@ -29,7 +29,7 @@
     "lib"
   ],
   "devDependencies": {
-    "mocha": "~2.5.1",
+    "mocha": "~3.0.0",
     "gulp": "~3.9.0",
     "should": "~9.0.0",
     "sinon": "~1.17.1",
