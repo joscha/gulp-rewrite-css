@@ -16,7 +16,7 @@
     "gulp-util": "~3.0.6"
   },
   "engines": {
-    "node": ">= 0.10"
+    "node": ">= 4"
   },
   "scripts": {
     "prepublish": "coffee -o lib src",
