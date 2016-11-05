@@ -1,8 +1,10 @@
 {
   "name": "gulp-rewrite-css",
   "description": "Rewrite url references in CSS",
-  "version": "0.0.9",
-  "repository": "https://github.com/joscha/gulp-rewrite-css.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joscha/gulp-rewrite-css.git"
+  },
   "homepage": "https://github.com/joscha/gulp-rewrite-css",
   "keywords": [
     "gulpplugin",
@@ -23,7 +25,8 @@
     "test": "mocha --compilers coffee:coffee-script/register -R spec",
     "watch": "mocha --compilers coffee:coffee-script/register -R min --watch",
     "coverage": "coffee -o src src && coffee -o test test && istanbul cover _mocha --report html -- -R spec -t 3000 -s 2000",
-    "coveralls": "coffee -o src src && coffee -o test test && istanbul cover _mocha --report lcovonly -- -R spec -t 3000 -s 2000 && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "coffee -o src src && coffee -o test test && istanbul cover _mocha --report lcovonly -- -R spec -t 3000 -s 2000 && cat ./coverage/lcov.info | coveralls",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "files": [
     "lib"
@@ -39,7 +42,8 @@
     "proxyquire": "~1.7.3",
     "should": "~11.1.0",
     "sinon": "~1.17.1",
-    "strip-ansi": "~3.0.0"
+    "strip-ansi": "~3.0.0",
+    "semantic-release": "^4.3.5"
   },
   "license": "MIT",
   "config": {
