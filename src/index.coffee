@@ -16,8 +16,7 @@ URL_REGEX = ///
             \(  # An opening bracket
             \s* # Arbitrary white-spaces
             (?!["']?data:) # explicitly don't match data-urls
-            ([^\)]+) # Anything but a closing bracket
-            \) # A closing bracket
+            (.+?)\)(?=\s+(?!\))|;) # anything up to first closing bracket that is not followed by other closing brackets
             ///g # We want to replace all the matches
 
 IMPORT_REGEX = ///
