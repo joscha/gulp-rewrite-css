@@ -6,14 +6,7 @@
 [![Dependency Status][depstat-image]][depstat-url]
 [![devDependency Status][devdepstat-image]][devdepstat-url]
 
-A gulp plugin that allows rewriting url & @import references in CSS
-
-## Information
-
-| Package      | gulp-rewrite-css                                        |
-|--------------|---------------------------------------------------------|
-| Description  | Rewrite `url(…)` and `@import` references in CSS files. |
-| Node version | >= 0.10                                                 |
+A gulp plugin that allows rewriting `url(…)` and `@import` references in CSS
 
 ## Installation
 
