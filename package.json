@@ -32,7 +32,7 @@
     "lib"
   ],
   "devDependencies": {
-    "coffee-script": "~1.11.0",
+    "coffee-script": "~1.12.0",
     "coveralls": "~2.11.4",
     "cz-conventional-changelog": "^1.2.0",
     "gulp": "~3.9.0",
