@@ -212,3 +212,11 @@ describe 'gulp-rewrite-css', ->
 
         done()
       assert 'opt.adaptPath.css', test, 'opt.adaptPath.expected.css'
+
+  describe 'minified css', ->
+    beforeEach ->
+      opts =
+        destination: getFixturePath 'another/dir'
+
+    it 'should rewrite urls in minified css', (done) ->
+      assert 'minified.css', done, 'minified.expected.css'
