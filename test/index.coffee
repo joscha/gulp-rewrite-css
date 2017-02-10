@@ -220,3 +220,12 @@ describe 'gulp-rewrite-css', ->
 
     it 'should rewrite urls in minified css', (done) ->
       assert 'minified.css', done, 'minified.expected.css'
+
+  describe 'comma after URLs', ->
+    beforeEach ->
+      opts =
+        destination: getFixturePath 'another/dir'
+
+    it 'should rewrite URLs that are followed by a comma', (done) ->
+      assert 'comma.css', done, 'comma.expected.css'
+
