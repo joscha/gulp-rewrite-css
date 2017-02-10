@@ -40,7 +40,7 @@
     "mocha": "~3.2.0",
     "mocha-lcov-reporter": "1.2.0",
     "proxyquire": "~1.7.3",
-    "should": "~11.1.0",
+    "should": "~11.2.0",
     "sinon": "~1.17.1",
     "strip-ansi": "~3.0.0",
     "semantic-release": "^6.3.2"
