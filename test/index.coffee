@@ -160,6 +160,8 @@ describe 'gulp-rewrite-css', ->
       assert 'relative-slash.css', done, 'relative-slash.css'
     it 'should leave svgView URLs alone', (done) ->
       assert 'index.svgPath.css', done, 'index.svgPath.expected.css'
+    it 'should handle rewriting important rules', (done) ->
+      assert 'index.important.css', done, 'index.important.expected.css'
 
     describe 'data-urls', ->
       it 'should be left alone', (done) ->
