@@ -40,7 +40,7 @@ gulp.task('my-rewrite', function() {
 	| `targetFile`     | the path of the target file (e.g. the contents of `url(…)` or `@import`) |
 
 ## License
-MIT (c) 2016 Joscha Feth <joscha@feth.com>
+MIT (c) 2017 Joscha Feth <joscha@feth.com>
 
 [npm-url]: https://npmjs.org/package/gulp-rewrite-css
 [npm-image]: http://img.shields.io/npm/v/gulp-rewrite-css.svg
