@@ -48,10 +48,10 @@ module.exports = (opt) ->
     path.join (path.relative ctx.destinationDir, ctx.sourceDir), ctx.targetFile
 
   unless typeof opt.adaptPath is 'function'
-    throw new gutil.PluginError PLUGIN_NAME, 'adaptPath method is mssing'
+    throw new gutil.PluginError PLUGIN_NAME, 'adaptPath method is missing'
 
   unless opt.destination
-    throw new gutil.PluginError PLUGIN_NAME, 'destination directory is mssing'
+    throw new gutil.PluginError PLUGIN_NAME, 'destination directory is missing'
 
   mungePath = (match, sourceFilePath, file) ->
     if (isRelativeUrl file) and not (isRelativeToBase file)
