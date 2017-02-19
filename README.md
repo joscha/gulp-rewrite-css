@@ -1,5 +1,7 @@
 #[gulp](https://github.com/gulpjs/gulp)-rewrite-css
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/joscha/gulp-rewrite-css.svg)](https://greenkeeper.io/)
+
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
