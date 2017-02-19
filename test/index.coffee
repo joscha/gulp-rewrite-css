@@ -52,7 +52,7 @@ describe 'gulp-rewrite-css', ->
 
   describe 'params', ->
     it 'should throw an error if no destination path is passed', ->
-      rewriteCss.should.throw 'destination directory is mssing'
+      rewriteCss.should.throw 'destination directory is missing'
 
     it 'should give debug output if debug is set to true', (done) ->
       opts.debug = true
