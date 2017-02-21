@@ -34,7 +34,7 @@
   "devDependencies": {
     "coffee-script": "~1.12.4",
     "coveralls": "~2.11.4",
-    "cz-conventional-changelog": "^1.2.0",
+    "cz-conventional-changelog": "^2.0.0",
     "gulp": "~3.9.0",
     "istanbul": "~0.4.0",
     "mocha": "~3.2.0",
