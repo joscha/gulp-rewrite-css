@@ -41,11 +41,12 @@ isRelativeUrl = (u) ->
 
 isRelativeToBase = (u) -> '/' is u.substr 0, 1
 
+adaptPath = (ctx) -> path.join (path.relative ctx.destinationDir, ctx.sourceDir), ctx.targetFile
+
 module.exports = (opt) ->
   opt ?= {}
   opt.debug ?= false
-  opt.adaptPath ?= (ctx) ->
-    path.join (path.relative ctx.destinationDir, ctx.sourceDir), ctx.targetFile
+  opt.adaptPath ?= adaptPath
 
   unless typeof opt.adaptPath is 'function'
     throw new gutil.PluginError PLUGIN_NAME, 'adaptPath method is missing'
@@ -133,3 +134,5 @@ module.exports = (opt) ->
       newFile.contents = new Buffer newContents
       callback null, newFile
       return
+
+module.exports.adaptPath = adaptPath

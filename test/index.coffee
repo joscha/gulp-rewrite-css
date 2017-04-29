@@ -215,6 +215,15 @@ describe 'gulp-rewrite-css', ->
         done()
       assert 'opt.adaptPath.css', test, 'opt.adaptPath.expected.css'
 
+    it 'should be possible to use the OOTB adaptPath', (done) ->
+      myAdaptPath = sinon.spy(rewriteCss.adaptPath)
+      opts.adaptPath= myAdaptPath
+
+      test = ->
+        myAdaptPath.calledOnce.should.be.true
+        done()
+      assert 'index.css', test, 'index.expected.css'
+
   describe 'minified css', ->
     beforeEach ->
       opts =
