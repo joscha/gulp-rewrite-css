@@ -14,7 +14,7 @@
   "main": "./lib/index",
   "dependencies": {
     "event-stream": "~3.3.2",
-    "bufferstreams": "~1.1.0",
+    "bufferstreams": "~2.0.0",
     "gulp-util": "~3.0.6"
   },
   "engines": {
