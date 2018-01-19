@@ -2,9 +2,10 @@
 
 es = require 'event-stream'
 BufferStreams = require 'bufferstreams'
-gutil = require 'gulp-util'
-magenta = gutil.colors.magenta
-green = gutil.colors.green
+magenta = require 'ansi-magenta'
+green = require 'ansi-green'
+PluginError = require 'plugin-error'
+log = require 'fancy-log'
 path = require 'path'
 url = require 'url'
 
@@ -49,10 +50,10 @@ module.exports = (opt) ->
   opt.adaptPath ?= adaptPath
 
   unless typeof opt.adaptPath is 'function'
-    throw new gutil.PluginError PLUGIN_NAME, 'adaptPath method is missing'
+    throw new PluginError PLUGIN_NAME, 'adaptPath method is missing'
 
   unless opt.destination
-    throw new gutil.PluginError PLUGIN_NAME, 'destination directory is missing'
+    throw new PluginError PLUGIN_NAME, 'destination directory is missing'
 
   mungePath = (match, sourceFilePath, file) ->
     if (isRelativeUrl file) and not (isRelativeToBase file)
@@ -69,7 +70,7 @@ module.exports = (opt) ->
         targetUrl = targetUrl.replace ///\\///g, '/' if path.sep is '\\'
         return targetUrl.replace "'", "\\'"
     else if opt.debug
-      gutil.log (magenta PLUGIN_NAME),
+      log (magenta PLUGIN_NAME),
                 'not rewriting absolute path for',
                 (magenta match),
                 'in',
@@ -78,7 +79,7 @@ module.exports = (opt) ->
 
   logRewrite = (match, sourceFilePath, destinationFilePath) ->
     if opt.debug
-      gutil.log (magenta PLUGIN_NAME),
+      log (magenta PLUGIN_NAME),
                 'rewriting path for',
                 (magenta match),
                 'in',
@@ -108,7 +109,7 @@ module.exports = (opt) ->
 
   streamReplace = (file) ->
     (err, buf, cb) ->
-      cb gutil.PluginError PLUGIN_NAME, err if err
+      cb PluginError PLUGIN_NAME, err if err
 
       # Use the buffered content
       buf = Buffer bufferReplace file, String buf
