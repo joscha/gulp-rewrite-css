@@ -6,14 +6,16 @@ proxyquire = require 'proxyquire'
 gutilStub =
   log: ->
     #console.log(arguments)
+fancyLogStub = ->
+  gutilStub.log.apply(null, arguments)
 path = require 'path'
 rewriteCss = proxyquire '../src',
-  'gulp-util': gutilStub
+  'fancy-log': fancyLogStub
   'path': path
 es = require 'event-stream'
 Stream = require 'stream'
 fs = require 'fs'
-gutil = require 'gulp-util'
+Vinyl = require 'vinyl'
 stripAnsi = require 'strip-ansi'
 
 getFixturePath = (relativePath = '') ->
@@ -70,7 +72,7 @@ describe 'gulp-rewrite-css', ->
 
   describe 'with null file', ->
     it 'should return the file as-is', (done) ->
-      file = new gutil.File
+      file = new Vinyl
         base: getFixturePath()
         cwd: __dirname,
         path: inFile
