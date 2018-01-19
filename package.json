@@ -26,7 +26,8 @@
     "watch": "mocha --compilers coffee:coffee-script/register -R min --watch",
     "coverage": "coffee -o src src && coffee -o test test && istanbul cover _mocha --report html -- -R spec -t 3000 -s 2000",
     "coveralls": "coffee -o src src && coffee -o test test && istanbul cover _mocha --report lcovonly -- -R spec -t 3000 -s 2000 && cat ./coverage/lcov.info | coveralls",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release",
+    "travis-deploy-once": "travis-deploy-once"
   },
   "files": [
     "lib"
@@ -43,7 +44,8 @@
     "should": "~13.1.0",
     "sinon": "~4.1.0",
     "strip-ansi": "~3.0.0",
-    "semantic-release": "^7.0.1"
+    "semantic-release": "^12.2.3",
+    "travis-deploy-once": "^4.3.2"
   },
   "license": "MIT",
   "config": {
