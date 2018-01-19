@@ -25,8 +25,8 @@
   },
   "scripts": {
     "prepublish": "coffee -o lib src",
-    "test": "mocha --compilers coffee:coffee-script/register -R spec",
-    "watch": "mocha --compilers coffee:coffee-script/register -R min --watch",
+    "test": "mocha --require coffee-script/register -R spec \"test/*.coffee\"",
+    "watch": "mocha --require coffee-script/register -R min \"test/*.coffee\" --watch --watch-extensions coffee",
     "coverage": "coffee -o src src && coffee -o test test && istanbul cover _mocha --report html -- -R spec -t 3000 -s 2000",
     "coveralls": "coffee -o src src && coffee -o test test && istanbul cover _mocha --report lcovonly -- -R spec -t 3000 -s 2000 && cat ./coverage/lcov.info | coveralls",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
