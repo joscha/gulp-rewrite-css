@@ -28,7 +28,9 @@
     "test": "mocha --require coffee-script/register -R spec \"test/*.coffee\"",
     "watch": "mocha --require coffee-script/register -R min \"test/*.coffee\" --watch --watch-extensions coffee",
     "coverage": "coffee -o src src && coffee -o test test && istanbul cover _mocha --report html -- -R spec -t 3000 -s 2000",
-    "coveralls": "coffee -o src src && coffee -o test test && istanbul cover _mocha --report lcovonly -- -R spec -t 3000 -s 2000 && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "coffee -o src src && coffee -o test test && istanbul cover _mocha --report lcovonly -- -R spec -t 3000 -s 2000 && cat ./coverage/lcov.info | coveralls",
+    "travis-deploy-once": "travis-deploy-once",
+    "semantic-release": "semantic-release"
   },
   "files": [
     "lib"
