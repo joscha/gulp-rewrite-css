@@ -47,7 +47,7 @@
     "should": "~13.2.1",
     "sinon": "~4.2.0",
     "strip-ansi": "~4.0.0",
-    "semantic-release": "^12.2.3",
+    "semantic-release": "^15.6.1",
     "travis-deploy-once": "^4.3.2",
     "vinyl": "^2.1.0"
   },
