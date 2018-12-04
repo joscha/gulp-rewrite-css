@@ -16,7 +16,7 @@
     "ansi-green": "^0.1.1",
     "ansi-magenta": "^0.1.1",
     "bufferstreams": "~2.0.0",
-    "event-stream": "~3.3.2",
+    "event-stream": "3.3.4",
     "fancy-log": "^1.3.2",
     "plugin-error": "^1.0.0"
   },
@@ -44,10 +44,10 @@
     "mocha": "~5.0.0",
     "mocha-lcov-reporter": "1.3.0",
     "proxyquire": "~1.8.0",
+    "semantic-release": "^12.2.3",
     "should": "~13.2.1",
     "sinon": "~4.2.0",
     "strip-ansi": "~4.0.0",
-    "semantic-release": "^12.2.3",
     "travis-deploy-once": "^4.3.2",
     "vinyl": "^2.1.0"
   },
