@@ -46,7 +46,7 @@
     "proxyquire": "~2.1.0",
     "semantic-release": "^15.12.4",
     "should": "~13.2.1",
-    "sinon": "~4.2.0",
+    "sinon": "~7.4.1",
     "strip-ansi": "~4.0.0",
     "travis-deploy-once": "^4.3.2",
     "vinyl": "^2.1.0"
